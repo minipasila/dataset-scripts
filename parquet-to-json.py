@@ -19,8 +19,14 @@ table = pq.read_table(parquet_file)
 # Convert the Parquet table to a Pandas DataFrame
 df = table.to_pandas()
 
-# Convert the DataFrame to JSON using custom encoder
-json_data = json.dumps(df.to_dict(orient='records'), ensure_ascii=False, cls=CustomJSONEncoder)
+# Convert the DataFrame to JSON using custom encoder with proper formatting
+json_data = json.dumps(
+    df.to_dict(orient='records'), 
+    ensure_ascii=False, 
+    cls=CustomJSONEncoder,
+    indent=2,  # Add indentation for readability
+    separators=(',', ': ')  # Clean separators (optional)
+)
 
 # Save JSON data to a file
 json_file = 'dataset-output.json'
